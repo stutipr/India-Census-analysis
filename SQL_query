@@ -1,0 +1,88 @@
+create database census;
+use census;
+select  * from census.dataset1;
+select  * from census.dataset2;
+
+select sum(Population) as Total_Population 
+from dataset1;
+
+-- avg growth
+select avg(Growth) 
+from dataset2;
+
+select state, round(avg(growth),0)
+from dataset2
+group by state
+order by avg(growth) desc;
+
+select state, sex_ratio
+from dataset2
+order by 2 desc;
+
+select state, sex_ratio
+from dataset2
+order by 2
+limit 3;
+
+select state, avg(growth)
+from dataset2
+group by 1
+order by 2
+limit 3;
+
+select state, literacy
+from dataset2
+order by 2 desc
+limit 3;
+
+select state, round(avg(literacy),0) avg_literacy_ratio
+from dataset2
+group by state
+having round(avg(literacy),0)>90
+order by 2 desc;
+
+SELECT District, State, Growth
+FROM dataset2
+ORDER BY Growth DESC;
+
+select *  from dataset1 where state in ('Jharkhand', 'Bihar');
+
+select * from dataset2;
+
+SELECT State, AVG(Literacy) AS Average_Literacy
+FROM dataset2
+GROUP BY State
+order by 2 desc;
+
+
+SELECT District, State, Population
+FROM dataset1
+ORDER BY Population DESC;
+
+
+select D.District, D.State, DP.Population, D.Growth
+from dataset2 D
+left join dataset1 DP
+on D.District=DP.District;
+
+select D.District, D.State, DP.Population, D.Growth
+from dataset2 D
+left join dataset1 DP
+on D.District=DP.District;
+
+drop table if exists topstate;
+create table topstates
+(state nvarchar(255),
+topstate float
+);
+
+insert into topstates
+select state, round(avg(literacy),0) avg_literacy_ration 
+from dataset2
+group by state
+order by 2;
+
+select * from topstates order by topstates.topstate desc;
+
+
+
